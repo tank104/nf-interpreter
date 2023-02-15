@@ -40,14 +40,16 @@ extern "C"
         nanoHAL_Initialize();
     }
 
-    void nanoHAL_Uninitialize_C()
+    void nanoHAL_Uninitialize_C(bool isPoweringDown)
     {
-        nanoHAL_Uninitialize();
+        nanoHAL_Uninitialize(isPoweringDown);
     }
 }
 
-void nanoHAL_Initialize()
+void nanoHAL_Initialize(bool isPoweringDown)
 {
+    (void)isPoweringDown;
+
     // initialize global mutex
     // chMtxObjectInit(&interpreterGlobalMutex);
 

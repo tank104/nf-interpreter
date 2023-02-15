@@ -37,7 +37,6 @@ extern void DeInitPwm();
 #include <sys_dev_usbstream_native_target.h>
 #endif
 
-
 // global mutex protecting the internal state of the interpreter, including event flags
 // mutex_t interpreterGlobalMutex;
 
@@ -51,14 +50,16 @@ extern "C"
         nanoHAL_Initialize();
     }
 
-    void nanoHAL_Uninitialize_C()
+    void nanoHAL_Uninitialize_C(bool isPoweringDown)
     {
-        nanoHAL_Uninitialize();
+        nanoHAL_Uninitialize(isPoweringDown);
     }
 }
 
-void nanoHAL_Initialize()
+void nanoHAL_Initialize(bool isPoweringDown)
 {
+    (void)isPoweringDown;
+
     // initialize global mutex
     // chMtxObjectInit(&interpreterGlobalMutex);
 
@@ -138,10 +139,10 @@ void nanoHAL_Initialize()
 #endif
 
 #if (GECKO_USE_ADC0 == TRUE) && defined(NANO_GG_ADC_NATIVE_TARGET_H)
-adc0Initialized = false;
+    adc0Initialized = false;
 #endif
 #if (GECKO_USE_ADC1 == TRUE) && defined(NANO_GG_ADC_NATIVE_TARGET_H)
-adc1Initialized = false;
+    adc1Initialized = false;
 #endif
 
 #if GECKO_FEATURE_USBD_WINUSB == TRUE
@@ -283,16 +284,16 @@ void nanoHAL_Uninitialize()
 #endif
 
 #if (GECKO_USE_ADC0 == TRUE) && defined(NANO_GG_ADC_NATIVE_TARGET_H)
-ADC_Reset(ADC0);
-adc0Initialized = false;
+    ADC_Reset(ADC0);
+    adc0Initialized = false;
 #endif
 #if (GECKO_USE_ADC1 == TRUE) && defined(NANO_GG_ADC_NATIVE_TARGET_H)
-ADC_Reset(ADC1);
-adc1Initialized = false;
+    ADC_Reset(ADC1);
+    adc1Initialized = false;
 #endif
 
 #if GECKO_FEATURE_USBD_WINUSB == TRUE
-    
+
     // abort any transfer in progress, just in case
     sl_usbd_vendor_abort_write_bulk(sl_usbd_vendor_winusb_number);
     sl_usbd_vendor_abort_read_bulk(sl_usbd_vendor_winusb_number);
