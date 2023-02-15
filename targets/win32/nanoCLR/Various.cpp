@@ -174,15 +174,15 @@ void __cdecl nanoHAL_Uninitialize(bool isPoweringDown)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//#if !defined(BUILD_RTM)
-// void __cdecl HARD_Breakpoint()
+// #if !defined(BUILD_RTM)
+//  void __cdecl HARD_Breakpoint()
 //{
-//    if(::IsDebuggerPresent())
-//    {
-//        ::DebugBreak();
-//    }
-//}
-//#endif
+//     if(::IsDebuggerPresent())
+//     {
+//         ::DebugBreak();
+//     }
+// }
+// #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
